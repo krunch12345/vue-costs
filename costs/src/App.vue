@@ -7,10 +7,20 @@
     <main>
       <PaymentDisplay
         :items="paymentsList"
+        :total-pages="Math.ceil(paymentsList.length / 4)"
+        :total="paymentsList.length"
+        :per-page="4"
+        :current-page="currentPage"
+        @pagechanged="onPageChange"
       />
+
+      <div>
+        Total: {{ paymentsListTotalAmount }}
+      </div>
 
       <AddPaymentForm
           @add-payment="addPayment"
+          :categoryList="categoryList"
       />
     </main>
   </div>
@@ -19,6 +29,7 @@
 <script>
 import PaymentDisplay from '@/components/PaymentDisplay.vue'
 import AddPaymentForm from '@/components/AddPaymentForm.vue'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -29,40 +40,36 @@ export default {
   },
 
   data: () => ({
-    show: true,
-    counter: 0,
-    paymentsList: [],
     currentPage: 1,
   }),
 
   methods: {
-    fetchData() {
-      return [
-        {
-          date: '2020-02-28',
-          category: 'Food',
-          value: 169,
-        },
-        {
-          date: '2020-03-03',
-          category: 'Transport',
-          value: 360,
-        },
-        {
-          date: '2020-05-10',
-          category: 'Food',
-          value: 532,
-        },
-      ];
-    },
+    ...mapMutations(['ADD_NEW_PAYMENT']),
+    ...mapActions([
+      'fetchData',
+      'fetchCategoryList',
+    ]),
 
     addPayment(data) {
-      this.paymentsList.push(data)
+      this.ADD_NEW_PAYMENT(data)
+    },
+
+    onPageChange(page) {
+      this.currentPage = page;
     },
   },
 
+  computed: {
+    ...mapGetters([
+        'paymentsList',
+        'paymentsListTotalAmount',
+        'categoryList',
+    ]),
+  },
+
   created() {
-    this.paymentsList = this.fetchData()
+    this.fetchData()
+    this.fetchCategoryList()
   },
 }
 </script>

@@ -15,7 +15,15 @@
       </label>
 
       <label for="category">
-        <input id="category" type="text" placeholder="Category" v-model="category">
+        <select id="category" v-model="category">
+          <option
+            v-for="category of categoryList"
+            :value="category"
+            :key="category"
+          >
+            {{ category }}
+          </option>
+        </select>
       </label>
 
       <label for="value">
@@ -30,6 +38,13 @@
 <script>
 export default {
   name: 'AddPaymentForm',
+
+  props: {
+    categoryList: {
+      type: Array,
+      default: () => [],
+    }
+  },
 
   data: () => ({
     value: '',
@@ -52,14 +67,18 @@ export default {
 
       this.$emit('add-payment', data)
       this.isShow = false
-      this.value = ''
-      this.category = ''
-      this.date = ''
+      this.resetData()
     },
 
     onShow() {
       this.isShow = true
     },
+
+    resetData() {
+      this.value = ''
+      this.category = ''
+      this.date = ''
+    }
   },
 
   computed: {

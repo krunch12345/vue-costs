@@ -1,76 +1,27 @@
 <template>
   <div id="app">
-    <header>
-      <div class="header">My personal costs</div>
+    <header class="header">
+      <div>My personal costs</div>
+
+      <nav class="nav-bar">
+        <router-link class="nav-bar-item" to="dashboard">Dashboard</router-link>
+        <router-link class="nav-bar-item" to="about">About</router-link>
+      </nav>
     </header>
 
     <main>
-      <PaymentDisplay
-        :items="paymentsList"
-        :total-pages="Math.ceil(paymentsList.length / 4)"
-        :total="paymentsList.length"
-        :per-page="4"
-        :current-page="currentPage"
-        @pagechanged="onPageChange"
-      />
-
-      <div>
-        Total: {{ paymentsListTotalAmount }}
-      </div>
-
-      <AddPaymentForm
-          @add-payment="addPayment"
-          :categoryList="categoryList"
-      />
+      <router-view/>
     </main>
   </div>
 </template>
 
 <script>
-import PaymentDisplay from '@/components/PaymentDisplay.vue'
-import AddPaymentForm from '@/components/AddPaymentForm.vue'
-import { mapMutations, mapActions, mapGetters } from 'vuex'
-
 export default {
   name: 'App',
 
-  components: {
-    AddPaymentForm,
-    PaymentDisplay,
-  },
-
   data: () => ({
-    currentPage: 1,
+    page: 'dashboard',
   }),
-
-  methods: {
-    ...mapMutations(['ADD_NEW_PAYMENT']),
-    ...mapActions([
-      'fetchData',
-      'fetchCategoryList',
-    ]),
-
-    addPayment(data) {
-      this.ADD_NEW_PAYMENT(data)
-    },
-
-    onPageChange(page) {
-      this.currentPage = page;
-    },
-  },
-
-  computed: {
-    ...mapGetters([
-        'paymentsList',
-        'paymentsListTotalAmount',
-        'categoryList',
-    ]),
-  },
-
-  created() {
-    this.fetchData()
-    this.fetchCategoryList()
-  },
 }
 </script>
 
@@ -90,7 +41,16 @@ export default {
 .header
   display: flex
   justify-content: center
+  align-items: center
+  flex-direction: column
   padding: 2rem 0
   font-size: 32px
+  width: 100%
+  margin: 0 auto
+
+.nav-bar-item
+  padding: 0 1rem
+  font-size: 20px
+  text-decoration: none
 
 </style>

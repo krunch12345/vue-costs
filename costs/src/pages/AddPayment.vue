@@ -1,21 +1,12 @@
 <template>
   <div :class="$style.container">
-    <button
-      @click="onShow"
-      title="Add new cost"
-      :disabled="isShow"
-      :class="$style.btnAdd"
-    >
-      ADD NEW COST +
-    </button>
-
-    <div :class="$style.form" v-if="isShow">
+    <div :class="$style.form">
       <label for="date">
         <input id="date" type="date" placeholder="Date" v-model="date">
       </label>
 
-      <label for="category">
-        <select id="category" v-model="category">
+      <label for="categories">
+        <select id="categories" v-model="category">
           <option
             v-for="category of categoryList"
             :value="category"
@@ -31,29 +22,32 @@
       </label>
 
       <button @click="addPayment" :disabled="!category || !value">Add</button>
+      <button @click="getParams">Get</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'AddPaymentForm',
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
-  props: {
-    categoryList: {
-      type: Array,
-      default: () => [],
+export default {
+  name: 'AddPayment',
+
+  data() {
+    return {
+      value: this.$route.query.value || '',
+      category: this.$route.params.type || '',
+      date: '',
     }
   },
 
-  data: () => ({
-    value: '',
-    category: '',
-    date: '',
-    isShow: false,
-  }),
-
   methods: {
+    ...mapMutations(['ADD_NEW_PAYMENT']),
+
+    ...mapActions([
+      'fetchCategoryList',
+    ]),
+
     addPayment() {
       const {
         value, category, date, paymentDay,
@@ -65,19 +59,18 @@ export default {
         date: date || paymentDay,
       }
 
-      this.$emit('add-payment', data)
-      this.isShow = false
+      this.ADD_NEW_PAYMENT(data)
       this.resetData()
-    },
-
-    onShow() {
-      this.isShow = true
     },
 
     resetData() {
       this.value = ''
       this.category = ''
       this.date = ''
+    },
+
+    getParams() {
+      console.log(this.$route.params.type, this.$route.query.value)
     }
   },
 
@@ -90,6 +83,14 @@ export default {
 
       return `${year}-${month}-${day}`
     },
+
+    ...mapGetters([
+      'categoryList',
+    ]),
+  },
+
+  created() {
+    this.fetchCategoryList()
   },
 }
 </script>
@@ -108,8 +109,5 @@ export default {
   margin: 0 auto
   align-items: center
   padding: 1rem 0
-
-.btnAdd
-  width: fit-content
 
 </style>

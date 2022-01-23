@@ -10,8 +10,8 @@ export default new Vuex.Store({
     },
     
     mutations: {
-        SET_PAYMENTS_LIST(state, pamentsList) {
-            state.paymentsList = pamentsList
+        SET_PAYMENTS_LIST(state, paymentsList) {
+            state.paymentsList = paymentsList
         },
         
         ADD_NEW_PAYMENT(state, payment) {

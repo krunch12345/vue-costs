@@ -14,7 +14,7 @@
     </div>
 
     <button
-        @click="goToPage('addpayment')"
+        @click="addPayment"
         title="Add new cost"
         :class="$style.btnAdd"
     >
@@ -36,6 +36,8 @@ export default {
 
   data: () => ({
     currentPage: 1,
+    showModal: false,
+    modalSettings: {},
   }),
 
   methods: {
@@ -44,11 +46,27 @@ export default {
     ]),
 
     onPageChange(page) {
-      this.currentPage = page;
+      this.currentPage = page
     },
 
-    goToPage(pageName) {
-      this.$router.push(pageName);
+    addPayment() {
+      this.$modal.show({
+        title: 'Add new payment',
+        content: 'addPayment',
+      })
+    },
+
+    authModalOpen() {
+      this.modalSettings = {
+        title: 'Auth',
+        content: 'auth',
+      }
+      this.showModal = true
+    },
+
+    paymentModalHide() {
+      this.showModal = false
+      this.modalSettings = {}
     },
   },
 
@@ -61,6 +79,8 @@ export default {
 
   mounted() {
     this.fetchData()
+    this.$modal.show({})
+    this.$modal.hide()
   },
 }
 </script>

@@ -22,7 +22,6 @@
       </label>
 
       <button @click="addPayment" :disabled="!category || !value">Add</button>
-      <button @click="getParams">Get</button>
     </div>
   </div>
 </template>
@@ -68,10 +67,6 @@ export default {
       this.category = ''
       this.date = ''
     },
-
-    getParams() {
-      console.log(this.$route.params.type, this.$route.query.value)
-    }
   },
 
   computed: {

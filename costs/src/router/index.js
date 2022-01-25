@@ -9,32 +9,22 @@ const router = new VueRouter({
         {
             path: '/dashboard',
             name: 'dashboard',
-            component: () => import('../pages/Dashboard.vue'),
+            component: () => import(/* webpackChunkName: "dashboard" */ '../pages/Dashboard.vue'),
         },
         {
             path: '/about*',
             name: 'about',
-            component: () => import('../pages/About.vue'),
+            component: () => import(/* webpackChunkName: "about" */ '../pages/About.vue'),
         },
         {
             path: '/notfound',
             name: 'notfound',
-            component: () => import('../pages/NotFound.vue'),
+            component: () => import(/* webpackChunkName: "notfound" */ '../pages/NotFound.vue'),
         },
         {
             path: '/addpayment',
             name: 'addpayment',
-            component: () => import('../pages/AddPayment.vue'),
-        },
-        {
-            path: '/addpayment/:type',
-            name: 'addpayment_quickly_onlytype',
-            component: () => import('../pages/AddPayment.vue'),
-        },
-        {
-            path: '/addpayment/:type?value=:value',
-            name: 'addpayment_quickly',
-            component: () => import('../pages/AddPayment.vue'),
+            component: () => import(/* webpackChunkName: "addpayment" */ '../components/AddPayment.vue'),
         },
         {
             path: '*',

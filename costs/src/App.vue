@@ -1,17 +1,13 @@
 <template>
-  <div id="app">
-    <header class="header">
-      <div>My personal costs</div>
+  <v-app>
+    <v-app-bar app flat>
+      <v-btn plain :ripple="false" to="/dashboard">Dashboard</v-btn>
+      <v-btn plain :ripple="false" to="/about">About</v-btn>
+    </v-app-bar>
 
-      <nav class="nav-bar">
-        <router-link class="nav-bar-item" to="dashboard">Dashboard</router-link>
-        <router-link class="nav-bar-item" to="about">About</router-link>
-      </nav>
-    </header>
-
-    <main>
+    <v-main>
       <router-view/>
-    </main>
+    </v-main>
 
     <transition name="fade">
       <ModalWindowAddPayment
@@ -19,7 +15,7 @@
           :settings="modalSettings"
       />
     </transition>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -28,7 +24,7 @@ import ModalWindowAddPayment from './components/ModalWindowAddPayment.vue'
 export default {
   name: 'App',
 
-  components: { ModalWindowAddPayment },
+  components: {ModalWindowAddPayment},
 
   data: () => ({
     page: 'dashboard',
@@ -66,21 +62,6 @@ export default {
   display: flex
   flex-direction: column
   max-width: 1140px
-
-.header
-  display: flex
-  justify-content: center
-  align-items: center
-  flex-direction: column
-  padding: 2rem 0
-  font-size: 32px
-  width: 100%
-  margin: 0 auto
-
-.nav-bar-item
-  padding: 0 1rem
-  font-size: 20px
-  text-decoration: none
 
 .fade-enter-active, .fade-leave-active
   transition: opacity .5s

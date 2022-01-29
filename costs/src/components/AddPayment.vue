@@ -1,29 +1,22 @@
 <template>
-  <div :class="$style.container">
-    <div :class="$style.form">
-      <label for="date">
-        <input id="date" type="date" placeholder="Date" v-model="date">
-      </label>
+  <v-card class="text-left pa-8">
+    <v-date-picker v-model="date" label="Date"/>
 
-      <label for="categories">
-        <select id="categories" v-model="category">
-          <option
-            v-for="category of categoryList"
-            :value="category"
-            :key="category"
-          >
-            {{ category }}
-          </option>
-        </select>
-      </label>
+    <v-select
+        v-model="category"
+        label="Category"
+        :items="categoryList"
+    />
 
-      <label for="value">
-        <input id="value" type="number" placeholder="Amount" v-model.number="value">
-      </label>
+    <v-text-field v-model.number="value" label="Value" type="number"/>
 
-      <button @click="addPayment" :disabled="!category || !value">Add</button>
-    </div>
-  </div>
+    <v-btn
+        @click="addPayment"
+        :disabled="!category || !value"
+    >
+      Add
+    </v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -91,18 +84,5 @@ export default {
 </script>
 
 <style lang="sass" module>
-
-.container
-  display: flex
-  justify-content: center
-  flex-direction: column
-  align-items: center
-
-.form
-  display: flex
-  justify-content: center
-  margin: 0 auto
-  align-items: center
-  padding: 1rem 0
 
 </style>

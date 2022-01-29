@@ -1,19 +1,18 @@
 <template>
-  <div :class="$style.container">
-    <div :class="$style.columnsNamesContainer">
-      <span v-for="columnName in columnNames" :key="columnName">
-        {{ columnName }}
-      </span>
-    </div>
+  <v-container>
+    <v-row>
+      <v-col cols="1">#</v-col>
+      <v-col cols="4">Date</v-col>
+      <v-col cols="5">Category</v-col>
+      <v-col cols="2">Amount</v-col>
+    </v-row>
 
-    <div :class="$style.costs">
-      <div :class="$style.cost" v-for="(item, index) in paginatedData" :key="index">
-        <span>{{ index + 1 }}</span>
-        <span>{{ item.date }}</span>
-        <span>{{ item.category }}</span>
-        <span>{{ item.value }}</span>
-      </div>
-    </div>
+    <v-row v-for="(item, index) in paginatedData" :key="index" class="mb-5">
+      <v-col cols="1">{{ index + 1 }}</v-col>
+      <v-col cols="4">{{ item.date }}</v-col>
+      <v-col cols="5">{{ item.category }}</v-col>
+      <v-col cols="2">{{ item.value }}</v-col>
+    </v-row>
 
     <ul :class="$style.pagination" v-if="items.length > 5 || currentPage > 1">
       <li :class="$style.paginationItem" title="Первая страница">
@@ -50,16 +49,12 @@
         </button>
       </li>
     </ul>
-  </div>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: 'PaymentDisplay',
-
-  data: () => ({
-    columnNames: ['ID', 'Date', 'Category', 'Amount']
-  }),
 
   props: {
     items: {
@@ -165,36 +160,6 @@ export default {
 </script>
 
 <style lang="sass" module>
-
-.container
-  display: flex
-  justify-content: space-between
-  flex-direction: column
-  margin: 0 auto
-  align-items: center
-  padding-bottom: 2rem
-
-.columnsNamesContainer
-  display: flex
-  justify-content: space-between
-  width: 100%
-  font-weight: bold
-
-.costs
-  padding: 0.5rem 0
-  min-height: 10rem
-  width: 100%
-
-.cost
-  display: flex
-  justify-content: space-between
-
-.columnsNamesContainer,
-.cost
-  span
-    width: (1140px / 4)
-    text-align: center
-
 .pagination
   display: flex
   justify-content: center

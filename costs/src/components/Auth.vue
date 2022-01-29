@@ -1,13 +1,9 @@
 <template>
-    <div>
-        <label for="1">
-            <input id="1" type="text">
-        </label>
+    <v-card class="text-left pa-8">
+      <v-text-field label="login" type="text"/>
 
-        <label for="2">
-            <input id="2" type="text">
-        </label>
-    </div>
+      <v-text-field label="password" type="password"/>
+    </v-card>
 </template>
 
 <script>

@@ -1,36 +1,60 @@
 <template>
-  <div>
-    <PaymentDisplay
-        :items="paymentsList"
-        :total-pages="Math.ceil(paymentsList.length / 4)"
-        :total="paymentsList.length"
-        :per-page="4"
-        :current-page="currentPage"
-        @pagechanged="onPageChange"
-    />
+  <v-container>
+    <v-row>
+      <v-col>
+        <div class="text-h5 text-sm-h3 mb-5">My personal costs</div>
 
-    <div>
-      Total: {{ paymentsListTotalAmount }}
-    </div>
+        <v-dialog v-model="showModal">
+          <template v-slot:activator="{ on }">
+            <v-btn
+                color="primary"
+                v-on="on"
+                @click="showModal = !showModal"
+                class="mb-5"
+            >
+              Add new payment
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
 
-    <button
-        @click="addPayment"
-        title="Add new cost"
-        :class="$style.btnAdd"
-    >
-      ADD NEW COST +
-    </button>
-  </div>
+          <v-card>
+            <AddPayment />
+          </v-card>
+        </v-dialog>
+
+        <div class="mb-5">
+          Total: {{ paymentsListTotalAmount }}
+        </div>
+
+        <div>
+          <PaymentDisplay
+              :items="paymentsList"
+              :total-pages="Math.ceil(paymentsList.length / 4)"
+              :total="paymentsList.length"
+              :per-page="4"
+              :current-page="currentPage"
+              @pagechanged="onPageChange"
+          />
+        </div>
+      </v-col>
+
+      <v-col>
+        Charts
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import PaymentDisplay from '../components/PaymentDisplay.vue'
+import AddPayment from '../components/AddPayment';
 
 export default {
   name: 'DashboardPage',
 
   components: {
+    AddPayment,
     PaymentDisplay,
   },
 
@@ -86,8 +110,5 @@ export default {
 </script>
 
 <style lang="sass" module>
-
-.btnAdd
-  width: fit-content
 
 </style>

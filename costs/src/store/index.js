@@ -23,7 +23,7 @@ export default new Vuex.Store({
         paymentsList: ({ paymentsList }) => paymentsList,
         paymentsListTotalAmount: ({ paymentsList }) => (
             paymentsList.reduce(
-                (total, { value }) => total + value,
+                (total, { value }) => total + +value,
                 0,
             )
         )
